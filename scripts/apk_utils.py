@@ -66,7 +66,7 @@ def jar2dex(srcDir, dstDir, dextool = "baksmali.jar"):
     """
 
     dexToolPath = file_utils.getFullToolPath("/lib/dx.jar")
-    cmd = file_utils.getJavaCMD() + ' -jar -Xms512m -Xmx512m "%s" --dex --output="%s" ' % (dexToolPath, dstDir+"/classes.dex")
+    cmd = file_utils.getJavaCMD() + ' -jar -Xms512m -Xmx1024m "%s" --dex --output="%s" ' % (dexToolPath, dstDir+"/classes.dex")
 
     for f in os.listdir(srcDir):
         if f.endswith(".jar"):
@@ -118,7 +118,7 @@ def decompileApk(source, targetdir, apktool = "apktool2.jar"):
         file_utils.del_file_folder(targetdir)
     if not os.path.exists(targetdir):
         os.makedirs(targetdir)
-    cmd = '"%s" -jar -Xms512m -Xmx512m "%s" -q d -b -f "%s" -o "%s"' % (file_utils.getJavaCMD(), apktool, apkfile, targetdir)
+    cmd = '"%s" -jar -Xms512m -Xmx1024m "%s" -q d -b -f "%s" -o "%s"' % (file_utils.getJavaCMD(), apktool, apkfile, targetdir)
     #cmd = '"%s" -q d -d -f "%s" "%s"' % (apktool, apkfile, targetdir)
     #print("decompile cmd : "+ cmd)
     ret = file_utils.execFormatCmd(cmd)
@@ -136,7 +136,7 @@ def recompileApk(sourcefolder, apkfile, apktool = "apktool2.jar"):
 
     ret = 1
     if os.path.exists(sourcefolder):
-        cmd = '"%s" -jar -Xms512m -Xmx512m "%s" -q b -f "%s" -o "%s"' % (file_utils.getJavaCMD(), apktool, sourcefolder, apkfile)
+        cmd = '"%s" -jar -Xms512m -Xmx1024m "%s" -q b -f "%s" -o "%s"' % (file_utils.getJavaCMD(), apktool, sourcefolder, apkfile)
         #cmd = '"%s" -q b -f "%s" "%s"' % (apktool, sourcefolder, apkfile)
         ret = file_utils.execFormatCmd(cmd)
 
@@ -877,7 +877,7 @@ def generateNewRFile(newPackageName, decompileDir):
 
     dexToolPath = file_utils.getFullToolPath("/lib/dx.jar")
 
-    cmd = file_utils.getJavaCMD() + ' -jar -Xmx512m -Xms512m "%s" --dex --output="%s" "%s"' % (dexToolPath, targetDexPath, genPath)
+    cmd = file_utils.getJavaCMD() + ' -jar -Xmx1024m -Xms512m "%s" --dex --output="%s" "%s"' % (dexToolPath, targetDexPath, genPath)
 
     ret = file_utils.execFormatCmd(cmd)
     if ret:
